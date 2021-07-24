@@ -1,0 +1,14 @@
+{
+  "name": "msa/msa.custom.chat",
+  "description": "Модуль для установки компонента чата",
+  "type": "bitrix-module",
+  "authors": [
+    {
+      "name": "Sergey Matveev",
+      "email": "matveevsa987@gmail.com"
+    }
+  ],
+  "require": {
+    "composer/installers": "~1"
+  }
+}
