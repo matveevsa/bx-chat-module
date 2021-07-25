@@ -4,8 +4,6 @@ defined('B_PROLOG_INCLUDED') and (B_PROLOG_INCLUDED === true) or die();
 
 require_once(dirname(__DIR__) . "/lib/Highloadblock/HLBlock.php");
 
-use Bitrix\Main\Localization\Loc;
-use Bitrix\Main\Loader;
 use Msa\Highloadblock\HLBlock;
 
 class msa_custom_chat extends CModule
@@ -20,10 +18,6 @@ class msa_custom_chat extends CModule
 
     function __construct()
     {
-        if (!Loader::includeModule('highloadblock')) {
-            throw new Exception('Модуль highloadblock не подключен');
-        }
-
         $arModuleVersion = [];
 
         $this->MODULE_PATH = $this->getModulePath();
@@ -34,7 +28,6 @@ class msa_custom_chat extends CModule
             $this->MODULE_VERSION_DATE = $arModuleVersion["VERSION_DATE"];
         }
 
-        //TODO: вынести все в лэнги
         $this->MODULE_NAME = "Модуль чата";
         $this->MODULE_DESCRIPTION = "После установки модуля будет доступен компонент msa:chat";
     }
@@ -87,6 +80,9 @@ class msa_custom_chat extends CModule
         return implode('/', $modulePath);
     }
 
+    /**
+     * Метод создаст хайлоадблок для сообщений чата
+     */
     protected function addHBlockMessages()
     {
         $hblockHelper = new HLBlock();
@@ -94,7 +90,7 @@ class msa_custom_chat extends CModule
         try {
             $id = $hblockHelper->addHblock(HLBlock::DEFAULT_HBLOCK_NAME, HLBlock::DEFAULT_HBLOCK_TABLE_NAME);
 
-            $hblockHelper->addUserTypeEntity($id, 'UF_USER_ID', ['USER_TYPE_ID' => 'string']);
+            $hblockHelper->addUserTypeEntity($id, 'UF_USER_ID', ['USER_TYPE_ID' => 'integer']);
             $hblockHelper->addUserTypeEntity($id, 'UF_MESSAGE', ['USER_TYPE_ID' => 'string']);
             $hblockHelper->addUserTypeEntity($id, 'UF_DATE', ['USER_TYPE_ID' => 'date']);
 
@@ -103,6 +99,9 @@ class msa_custom_chat extends CModule
         }
     }
 
+    /**
+     * Метод удалит хайлоадблок для сообщений чата
+     */
     protected function destroyHBlockMessages()
     {
         $hblockHelper = new HLBlock();
