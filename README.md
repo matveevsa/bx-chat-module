@@ -1,3 +1,30 @@
+## Установка модуля
+
+### composer
+Добавить следущюий код в файл composer.json выполнить команду composer install
+```
+{
+    "extra": {
+        "installer-paths": {
+            "modules/{$name}/": ["type:bitrix-module"]
+        }
+    },
+    "require": {
+        "msa/msa.custom.chat": "dev"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:matveevsa/bx-chat-module.git"
+        }
+    ]
+}
+```
+### ручная установка
+скопировать файлы из репозитория в корень проекта **/local/modules/msa.custom.chat**
+
+выполнить установку из админки, после установки будет доступен компонент **msa:chat**
+
 ### Техническое задание
 
 Реализован модуль установщик компонента чата:
